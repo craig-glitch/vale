@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>brians valentine 💌</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0f0f0f;
+  --text: #f5f3ee;
+  --accent: #c9a24d;
+}
+
+.light {
+  --bg: #f5f3ee;
+  --text: #0f0f0f;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: .5s ease;
+  overflow-x: hidden;
+}
+
+/* INTRO */
+#intro {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, #1a1a1a, #000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+#intro button {
+  padding: 20px 40px;
+  font-size: 1.2rem;
+  background: transparent;
+  color: #fff;
+  border: 2px solid var(--accent);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: .4s;
+}
+
+#intro button:hover {
+  background: var(--accent);
+  color: #000;
+}
+
+/* HEADER */
+header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  letter-spacing: 4px;
+}
+
+header span {
+  color: var(--accent);
+}
+
+#timer {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.timer-box {
+  padding: 15px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+}
+
+/* LETTER */
+section {
+  padding: 100px 10%;
+}
+
+.letter {
+  max-width: 700px;
+  margin: auto;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  line-height: 1.9;
+}
+
+/* SECRET */
+#secret {
+  display: none;
+  margin-top: 40px;
+  padding: 30px;
+  border: 1px solid var(--accent);
+  border-radius: 15px;
+  text-align: center;
+}
+
+/* GALLERY */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap: 20px;
+}
+
+.gallery img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+/* TOGGLE */
+#toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 1.4rem;
+}
+
+/* FLOATING EMOJIS */
+.emoji {
+  position: fixed;
+  bottom: -50px;
+  animation: float 8s linear infinite;
+  font-size: 1.5rem;
+  opacity: .6;
+}
+
+@keyframes float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-120vh); }
+}
+
+audio { display: none; }
+</style>
+</head>
+
+<body>
+
+<div id="intro">
+  <button onclick="openPackage()">🎁 Open the Package</button>
+</div>
+
+<div id="toggle" onclick="toggleMode()">🌙</div>
+
+<header>
+  <h1>to-my<span>-love😍</span></h1>
+  <p>A letter written in time.</p>
+
+  <div id="timer">
+    <div class="timer-box"><span id="days">0</span><br>Days</div>
+    <div class="timer-box"><span id="hours">0</span><br>Hours</div>
+    <div class="timer-box"><span id="minutes">0</span><br>Minutes</div>
+    <div class="timer-box"><span id="seconds">0</span><br>Seconds</div>
+  </div>
+</header>
+
+<section>
+  <div class="letter">
+    <p id="typewriter"></p>
+
+    <div id="secret">
+      💌 <br><br>
+      You are my once-in-a-lifetime.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="gallery">
+    <img src="img1.jpg">
+    <img src="img2.jpg">
+    <img src="img3.jpg">
+    <img src="img4.jpg">
+  </div>
+</section>
+
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* INTRO */
+function openPackage() {
+  document.getElementById("intro").style.display = "none";
+  document.getElementById("music").play();
+}
+
+/* MODE */
+function toggleMode() {
+  document.body.classList.toggle("light");
+}
+
+/* TIMER */
+function getValentines() {
+  const now = new Date();
+  let year = now.getFullYear();
+  let v = new Date(year,1,14);
+  if (now > v) v = new Date(year+1,1,14);
+  return v;
+}
+
+const target = getValentines();
+
+setInterval(() => {
+  const d = target - new Date();
+  document.getElementById("days").innerText = Math.floor(d/86400000);
+  document.getElementById("hours").innerText = Math.floor(d/3600000)%24;
+  document.getElementById("minutes").innerText = Math.floor(d/60000)%60;
+  document.getElementById("seconds").innerText = Math.floor(d/1000)%60;
+
+  if (new Date().getDate() === 14 && new Date().getMonth() === 1) {
+    document.getElementById("secret").style.display = "block";
+  }
+},1000);
+
+/* TYPEWRITER */
+const text = `My love,
+
+This letter isn’t written in ink —
+it’s written in time, patience, and choice.
+
+Every version of me still finds you.
+
+Happy Valentine’s Day.`;
+
+let i = 0;
+function type() {
+  if (i < text.length) {
+    document.getElementById("typewriter").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(type, 50);
+  }
+}
+type();
+
+/* EMOJIS */
+const emojis = ["❤️","💫","💌","✨"];
+setInterval(() => {
+  const e = document.createElement("div");
+  e.className = "emoji";
+  e.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+  e.style.left = Math.random()*100 + "vw";
+  e.style.animationDuration = 5 + Math.random()*5 + "s";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),10000);
+},800);
+</script>
+
+</body>
+</html>
